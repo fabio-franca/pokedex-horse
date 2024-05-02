@@ -7,10 +7,7 @@ program pokedexHorse;
 uses
   System.SysUtils,
   Horse,
-  Poke in 'model\Poke.pas',
-  Connection in 'model\Connection.pas',
-  UtilFunctions in 'model\UtilFunctions.pas',
-  Skill in 'model\Skill.pas';
+  Poke in 'model\Poke.pas';
 
 begin
   THorse.Get('/ping',

@@ -5,12 +5,7 @@ program pokedexHorse;
 {$R *.res}
 
 uses
-  System.SysUtils,
-  Horse,
-  Poke in 'model\Poke.pas',
-  Connection in 'model\Connection.pas',
-  UtilFunctions in 'model\UtilFunctions.pas',
-  Skill in 'model\Skill.pas';
+  System.SysUtils, Horse;
 
 begin
   THorse.Get('/ping',
