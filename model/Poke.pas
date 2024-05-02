@@ -10,7 +10,7 @@ type
     FID          : Integer;
     FName        : String;
     FLv          : Integer;
-    FType        : String;
+    FTypePoke    : String;
     FRarity      : String;
     FDateInsert  : TDateTime;
   public
@@ -20,13 +20,11 @@ type
     property ID          : Integer   read  FID            write FID;
     property Name        : String    read  FName          write FName;
     property Lv          : Integer   read  FLv            write FLv;
-    // ira acontece um erro ao tenta execultar por causa do FType([dcc32 Error] Poke.pas(23): E2004 Identifier redeclared: 'FType')
-    property FType       : String    read  FType          write FType;
+    property TypePoke    : String    read  FTypePoke      write FTypePoke;
     property Rarity      : String    read  FRarity        write FRarity;
     property DateInsert  : TDateTime read  FDateInsert    write FDateInsert;
 
     function insert (out erro: String): Boolean;
-
   end;
 
 implementation
@@ -54,14 +52,13 @@ begin
     Query.Close;
     Query.SQL.Clear;
 
-    Query.SQL.Add('INSERT INTO  poke (Name, Lv, Type, Rarity, DateInsert) ');
-    Query.SQL.Add('VALUES (:NAME, :LV, :TYPE, :RARITY, :DATEINSERT)       ');
+    Query.SQL.Add('INSERT INTO  poke (name, lv, typepoke, rarity) ');
+    Query.SQL.Add('VALUES (:NAME, :LV, :TYPEPOKE, :RARITY)        ');
 
     Query.ParamByName('NAME').Value       := Name;
     Query.ParamByName('LV').Value         := Lv;
-    Query.ParamByName('TYPE').Value       := FType;
+    Query.ParamByName('TYPEPOKE').Value   := TypePoke;
     Query.ParamByName('RARITY').Value     := Rarity;
-    Query.ParamByName('DATEINSERT').Value := DateInsert;
 
     Query.ExecSQL;
     Query.Free;

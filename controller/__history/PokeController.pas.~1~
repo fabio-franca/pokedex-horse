@@ -1,0 +1,57 @@
+unit PokeController;
+
+interface
+
+uses
+  Horse, System.Json, System.SysUtils, Poke, Firedac.Comp.Client, Data.DB,
+  DataSet.Serialize;
+
+  procedure Routes;
+  procedure InsertPoke(Req: THorseRequest; Res: THorseResponse; Next: TProc);
+
+implementation
+
+procedure InsertPoke(Req: THorseRequest; Res: THorseResponse; Next: TProc);
+var
+  bairro : TBairro;
+  oBairro: TJSONObject;
+  erro: string;
+  Body  : TJsonValue;
+begin
+  try
+    bairro := TBairro.Create;
+  except
+    Res.Send('Erro ao conectar com o banco').Status(500);
+    Exit;
+  end;
+
+  try
+    try
+      body := TJSONObject.ParseJSONValue(TEncoding.UTF8.GetBytes(Req.Body), 0) As TJsonValue;
+
+      bairro.descbair   := body.GetValue<string>('descbair', '');
+
+      bairro.Inserir(erro);
+
+      body.Free;
+
+      if erro <> '' then
+        raise Exception.Create(erro);
+
+    except on ex:exception do
+      begin
+        Res.Send(ex.Message).Status(400);
+        exit;
+      end;
+    end;
+
+    oBairro := TJSONObject.Create;
+    oBairro.AddPair('codibair', Bairro.Codibair);
+
+    Res.Send<TJSONObject>(oBairro).Status(201)
+  finally
+    bairro.Free;
+  end;
+end;
+
+end.

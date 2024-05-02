@@ -7,17 +7,27 @@ program pokedexHorse;
 uses
   System.SysUtils,
   Horse,
+  Horse.Jhonson,
+  Horse.Etag,
   Poke in 'model\Poke.pas',
   Connection in 'model\Connection.pas',
   UtilFunctions in 'model\UtilFunctions.pas',
-  Skill in 'model\Skill.pas';
+  Skill in 'model\Skill.pas',
+  PokeController in 'controller\PokeController.pas',
+  Routes in 'model\Routes.pas';
 
 begin
-  THorse.Get('/ping',
-    procedure(Req: THorseRequest; Res: THorseResponse)
-    begin
-      Res.Send('pong');
-    end);
+  THorse.Use(Jhonson())
+        .Use(eTag);
 
-  THorse.Listen(9000);
+  THorse.Routes.Prefix('/pokedex');
+
+  Routes.RoutesApplication;
+
+  THorse.Listen(9000,
+                procedure
+                begin
+                  Writeln(Format('Servidor rodando na porta %d ...', [THorse.Port]));
+                  Readln;
+                end);
 end.

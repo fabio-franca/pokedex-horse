@@ -8,9 +8,8 @@ uses
   FireDAC.Stan.Async, FireDAC.Phys, FireDAC.Phys.SQLite, FireDAC.Phys.SQLiteDef,
   FireDAC.Stan.ExprFuncs, FireDAC.FMXUI.Wait, Data.DB, FireDAC.Comp.Client,
 
-  FireDAC.Phys.FB, FireDAC.Phys.FBDef, System.Classes,
-  FireDAC.Comp.UI, FireDAC.Phys.MSSQLDef, FireDAC.Phys.ODBCBase,
-  System.IniFiles, System.SysUtils;
+  FireDAC.Phys.FB, FireDAC.Phys.FBDef, System.Classes, FireDAC.Comp.UI, FireDAC.Phys.ODBCBase,
+  System.IniFiles, System.SysUtils, FireDAC.Phys.MSSQL, FireDAC.Phys.MSSQLDef;
 
 var
   FConnection : TFDConnection;
@@ -22,9 +21,6 @@ var
 
 implementation
 
-uses
-
-  Poke, FireDAC.Phys.MSSQL;
 function SetupConnection(FConn: TFDConnection): string;
 var
   arq_ini : string;
@@ -32,7 +28,7 @@ var
 begin
   try
     try
-      arq_ini := GetCurrentDir + '\NpiServer.ini';
+      arq_ini := GetCurrentDir + '\pokedex-horse.ini';
 
       // Verifica se INI existe...
       if NOT FileExists(arq_ini) then
