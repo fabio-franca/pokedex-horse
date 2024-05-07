@@ -7,7 +7,7 @@ procedure RoutesApplication;
 implementation
 
 uses
-  Horse, PokeController, SkillController;
+  Horse, PokeController;
 
 procedure RoutesApplication;
 begin
@@ -17,9 +17,9 @@ begin
   THorse.Get('/poke/:id', PokeController.GetIdPoke); // Rota para obter um poke pelo ID
 
   //skill
-  THorse.Post('/skill/insertPokeSkil', SkillController.InsertPokeSkil);
-  THorse.Get('/skill/listSkill', SkillController.ListSkill);
-  THorse.Get('/skill/:id', SkillController.GetIdSkill);
+  THorse.Post('/poke/insertPokeSkil', PokeController.InsertPokeSkil);
+  THorse.Get('/poke/listSkill', PokeController.ListSkill);
+  THorse.Get('/poke/:id', PokeController.GetIdSkill);
 
 end;
 

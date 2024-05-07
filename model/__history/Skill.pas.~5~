@@ -50,30 +50,22 @@ begin
     Query.SQL.Clear;
 
     Query.SQL.Add('INSERT INTO  skill (Name, PokeId) ');
-    Query.SQL.Add('VALUES (:NAME, :LV, :TYPE, :RARITY, :DATEINSERT)       ');
+    Query.SQL.Add('VALUES (:NAME ');
 
-    //Query.ParamByName('NAME').Value       := Name;
+    Query.ParamByName('NAME').Value   := Name;
     Query.ParamByName('POKEID').Value := PokeId;
 
     Query.ExecSQL;
     Query.Free;
 
-    //Codibair := UltimoId();
-
-    Erro := '';
+    Erro   := '';
     Result := True;
 
   except on E: Exception do
     begin
-      Erro := 'Falha ao salvar registro: ' + e.Message;
+      Erro   := 'Falha ao salvar registro: ' + e.Message;
       Result := False;
     end;
   end;
 end;
 end.
-
-
-
-
-// Cria um ID e Nome das skill FId, FName, FPokeId
-// Cria um costrutor de propriadades, além  de uma função de incert

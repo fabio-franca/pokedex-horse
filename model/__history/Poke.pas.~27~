@@ -29,7 +29,6 @@ type
     function Insert(out erro: String): Boolean;
     function List(texto: String; out erro: String): TFDQuery;
     function GetIdPoke(id: Integer; out erro: String): TFDQuery;
-    function LastPokeId : Integer;
 
   end;
 
@@ -67,10 +66,7 @@ begin
     Query.ParamByName('RARITY').Value     := Rarity;
 
     Query.ExecSQL;
-    Query.Free;
 
-    ID := LastPokeId();
-    // cria uma função que retoner um inteiro do utimo pokemon, fazendo um select retonando iD
     Erro := '';
     Result := True;
   except
@@ -128,44 +124,15 @@ begin
     else
     begin
       erro := 'Pokemon não encontrado';
-      Result := nil;
     end;
   except
     on E: Exception do
     begin
       erro := 'Falha ao obter pokemon: ' + E.Message;
-      Result := nil;
+      Result := NIL;
     end;
   end;
-end;
-
-// cria uma função que retoner um inteiro do utimo pokemon, fazendo um select retonando iD
-function TPoke.LastPokeId : Integer;
-var
-  Query: TFDQuery;
-begin
-  try
-    // Cria a query usando a conexão do banco de dados
-    CriarQuery(Query);
-    Query.Close;
-    Query.SQL.Clear;
-    Query.SQL.Add('SELECT MAX(ID) AS ID FROM poke ');
-    Query.Open;
-
-    if not Query.IsEmpty then
-    begin
-      Result := Query.FieldByName('ID').AsInteger;
-    end
-    else
-    begin
-      Result := 0;
-    end;
-  except
-    on E: Exception do
-    begin
-      Result := 0;
-    end;
-  end;
+  Query.Free;
 end;
 
 end.

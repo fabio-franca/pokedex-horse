@@ -14,7 +14,8 @@ uses
   UtilFunctions in 'model\UtilFunctions.pas',
   Skill in 'model\Skill.pas',
   PokeController in 'controller\PokeController.pas',
-  Routes in 'model\Routes.pas';
+  Routes in 'model\Routes.pas',
+  SkillController in 'controller\SkillController.pas';
 
 begin
   THorse.Use(Jhonson())

@@ -11,7 +11,8 @@ uses
 
 procedure RoutesApplication;
 begin
-  THorse.Post('/insertPoke', PokeController.InsertPoke);
+  THorse.Post('/poke/insertPoke', PokeController.InsertPoke);
+  THorse.Get('/poke/list', PokeController.ListPoke);
 end;
 
 end.

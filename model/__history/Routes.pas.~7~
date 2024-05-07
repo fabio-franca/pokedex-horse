@@ -1,0 +1,20 @@
+unit Routes;
+
+interface
+
+procedure RoutesApplication;
+
+implementation
+
+uses
+  Horse, PokeController;
+
+procedure RoutesApplication;
+begin
+  THorse.Post('/poke/insertPoke', PokeController.InsertPoke);
+  THorse.Get('/poke/list', PokeController.ListPoke); // Rota para listar todos os pokemons
+  THorse.Get('/poke/:id)', PokeController.GetId);
+end;
+
+end.
+

@@ -93,6 +93,7 @@
         <DCCReference Include="model\Skill.pas"/>
         <DCCReference Include="controller\PokeController.pas"/>
         <DCCReference Include="model\Routes.pas"/>
+        <DCCReference Include="controller\SkillController.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
