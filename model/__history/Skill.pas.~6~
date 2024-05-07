@@ -19,10 +19,7 @@ type
     property Name        : String    read  FName          write FName;
     property PokeId      : Integer   read  FPokeId        write FPokeId;
 
-    function InsertPokeSkil(out erro: String): Boolean;
-    function ListSkill(texto: String; out erro: String): TFDQuery;
-    function GetIdPoke(id: Integer; out erro: String): TFDQuery;
-    function LastPokeIdSkill : Integer;
+    function insert (out erro: String): Boolean;
 
   end;
 
@@ -40,7 +37,7 @@ begin
   Connection.Disconect;
 end;
 
-function TSkill.InsertPokeSkil(out erro: String): Boolean;
+function TSkill.Insert(out erro: String): Boolean;
 
 var
   Query    : TFDQuery;
@@ -72,7 +69,7 @@ begin
   end;
 end;
 
-function TSkill.ListSkill(texto: String; out erro: String): TFDQuery;
+function TPoke.List(texto: String; out erro: String): TFDQuery;
 var
   Query: TFDQuery;
 begin
@@ -97,7 +94,7 @@ begin
 
 end;
 
-function TSkill.GetIdPoke(id: Integer; out erro: String): TFDQuery;
+function TPoke.GetIdPoke(id: Integer; out erro: String): TFDQuery;
 var
   Query: TFDQuery;
 begin
@@ -130,7 +127,7 @@ begin
 end;
 
 // cria uma função que retoner um inteiro do utimo pokemon, fazendo um select retonando iD
-function TSkill.LastPokeIdSkill : Integer;
+function TPoke.LastPokeId : Integer;
 var
   Query: TFDQuery;
 begin
@@ -139,7 +136,7 @@ begin
     CriarQuery(Query);
     Query.Close;
     Query.SQL.Clear;
-    Query.SQL.Add('SELECT MAX(ID) AS ID FROM skill ');
+    Query.SQL.Add('SELECT MAX(ID) AS ID FROM poke ');
     Query.Open;
 
     if not Query.IsEmpty then

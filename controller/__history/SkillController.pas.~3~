@@ -117,3 +117,10 @@ end;
 
 end.
 
+
+
+//Mesclar a list com GetId e fazer o inset das skil pegando o ID delas
+
+//SKILL: thunder , 4
+//skill: fast atack , 4
+//skill: pau flamejante, 3

@@ -1,27 +1,27 @@
-unit PokeController;
+unit SkillController;
 
 interface
 
 uses
   Horse, System.Json, System.SysUtils, Poke, Firedac.Comp.Client, Data.DB,
-  DataSet.Serialize,Connection;
+  DataSet.Serialize,Connection, skill;
 
-procedure InsertPoke(Req: THorseRequest; Res: THorseResponse; Next: TProc);
-procedure ListPoke(Req: THorseRequest; Res: THorseResponse; Next: TProc);
-procedure GetIdPoke(Req: THorseRequest; Res: THorseResponse; Next: TProc);
+procedure InsertPokeSkil(Req: THorseRequest; Res: THorseResponse; Next: TProc);
+procedure ListSkill(Req: THorseRequest; Res: THorseResponse; Next: TProc);
+procedure GetIdSkill(Req: THorseRequest; Res: THorseResponse; Next: TProc);
 
 
 implementation
 
-procedure InsertPoke(Req: THorseRequest; Res: THorseResponse; Next: TProc);
+procedure InsertPokeSkil(Req: THorseRequest; Res: THorseResponse; Next: TProc);
 var
-  poke: TPoke;
+  skill: TSkill;
   objPoke: TJSONObject;
   erro: string;
   body: TJsonValue;
 begin
   try
-    poke := TPoke.Create;
+    skill := TSkill.Create;
   except
     Res.Send('Erro ao conectar com o banco').Status(500);
     Exit;
@@ -31,12 +31,12 @@ begin
     try
       body := TJSONObject.ParseJSONValue(TEncoding.UTF8.GetBytes(Req.Body), 0) As TJsonValue;
 
-      poke.Name := body.GetValue<string>('name', '');
-      poke.Lv := body.GetValue<Integer>('lv', 0);
+      skill.Name := body.GetValue<string>('name', '');
+      {poke.Lv := body.GetValue<Integer>('lv', 0);
       poke.TypePoke := body.GetValue<string>('typepoke', '');
-      poke.Rarity := body.GetValue<string>('rarity', '');
+      poke.Rarity := body.GetValue<string>('rarity', ''); }
 
-      poke.Insert(erro);
+      skill.Insert(erro);
 
       body.Free;
 
@@ -51,19 +51,19 @@ begin
     end;
 
     objPoke := TJSONObject.Create;
-    objPoke.AddPair('id', Poke.ID.ToString);
+    objPoke.AddPair('id', skill.ID.ToString);
     Res.Send<TJSONObject>(objPoke).Status(201)
 
   finally
-    poke.Free;
+    skill.Free;
   end;
 end;
 
-procedure ListPoke(Req: THorseRequest; Res: THorseResponse; Next: TProc);
+procedure ListSkill(Req: THorseRequest; Res: THorseResponse; Next: TProc);
 var
-  pokeList: TJSONArray;
+  listSkill: TJSONArray;
   query: TFDQuery;
-  poke: TPoke;
+  skill: TSkill;
   erro: String;
   parametro:  String;
 
@@ -80,12 +80,12 @@ begin
 
   query := Poke.List( parametro, erro);
 
-  pokeList := query.ToJSONArray();
+  listSkill := query.ToJSONArray();
 
-  Res.Send<TJsonArray>(pokeList);
+  Res.Send<TJsonArray>(listSkill);
 end;
 
-procedure GetIdPoke(Req: THorseRequest; Res: THorseResponse; Next: TProc);
+procedure GetIdSkill(Req: THorseRequest; Res: THorseResponse; Next: TProc);
 var
   GetIdPoke: TJSONObject;
   query: TFDQuery;
@@ -117,3 +117,10 @@ end;
 
 end.
 
+
+
+//Mesclar a list com GetId e fazer o inset das skil pegando o ID delas
+
+//SKILL: thunder , 4
+//skill: fast atack , 4
+//skill: pau flamejante, 3

@@ -51,13 +51,29 @@ begin
     end;
 
     objPoke := TJSONObject.Create;
-    objPoke.AddPair('id', Poke.ID.ToString);
     Res.Send<TJSONObject>(objPoke).Status(201)
 
   finally
     poke.Free;
   end;
 end;
+
+{procedure GetIdPoke(Req: THorseRequest; Res: THorseResponse; Next: TProc);
+var
+  GetIdPoke: TJSONArray;
+  query: TFDQuery;
+  poke: TPoke;
+  erro: String;
+
+begin
+    try
+      poke := TPoke.Create;
+      poke.GetIdPoke := Req.Params['id'].ToInteger;
+    finally
+      res.Send('Erro ao conectar com o banco').Status(500);
+      exit;
+    end;
+end;}
 
 procedure ListPoke(Req: THorseRequest; Res: THorseResponse; Next: TProc);
 var
